@@ -1,11 +1,7 @@
-from cv2 import imread, matchTemplate, minMaxLoc, cvtColor, TM_CCORR_NORMED, COLOR_RGB2GRAY, IMREAD_GRAYSCALE
-from pytesseract import pytesseract, image_to_string
 from win32ui import CreateDCFromHandle, CreateBitmap
-from win32console import GetConsoleWindow
-from pystray import Icon, MenuItem
 from PIL import Image
-from numpy import array
-import win32api, win32con, win32gui, windows_toasts, time, threading, os
+from numpy import array, where
+import win32con, win32gui, time, requests, json, cv2
 
 def screenshot(region = (0, 0, 1920, 1080)):
 	left, top, width, height = region
@@ -24,11 +20,11 @@ def screenshot(region = (0, 0, 1920, 1080)):
 	win32gui.ReleaseDC(desktop, desktopDC)
 	return image
 
-def matchImage(screenshot, imagepath, region = (0, 0, 1920, 1080)):
-	screenshot = cvtColor(array(screenshot), COLOR_RGB2GRAY)
+def matchImage(screenshot, image, region = (0, 0, 1920, 1080)):
+	#screenshot = cvtColor(array(screenshot), COLOR_RGB2GRAY)
 
-	x, y, width, height = region
-	screenshot = screenshot[y:height, x:width]
-
-	_, maxVal, _, maxLoc = minMaxLoc(matchTemplate(screenshot, imread(imagepath, IMREAD_GRAYSCALE), TM_CCORR_NORMED))
+	#x, y, width, height = region
+	#screenshot = screenshot[y:height, x:width]
+	#cv2.imread(imagepath, cv2.IMREAD_GRAYSCALE)
+	_, maxVal, _, maxLoc = cv2.minMaxLoc(cv2.matchTemplate(screenshot, image, cv2.TM_CCORR_NORMED))
 	return maxVal, maxLoc
