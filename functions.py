@@ -2,6 +2,7 @@ from win32ui import CreateDCFromHandle, CreateBitmap
 from PIL import Image
 from numpy import array, where
 import win32con, win32gui, time, requests, json, cv2
+from ultralytics import YOLO
 
 def screenshot(region = (0, 0, 1920, 1080)):
 	left, top, width, height = region
