@@ -1,21 +1,24 @@
 from functions import *
 
+rf = Roboflow(api_key = "lQmUqij8BtbnlJ8kP0WG")
+project = rf.workspace("just-hobbies").project("hotwheel-2")
+#dataset = project.version(3).download("yolov8")
+model = project.version(3).model
 dbURL = "https://e-parking-2407-default-rtdb.firebaseio.com/"
-model = YOLO('yolov8s.pt')
-image = cv2.imread("images/fotocarros.png")
+imagePath = "images/3carros.jpg"
 parkingSpaces = 13
-freeSpaces = parkingSpaces
+occupiedSpaces = 0
 
-results = model(image, conf = 0.1)
-result = results[0]
-for i in range(len(result.boxes)):
-	freeSpaces -= 1
+while True:
+	predict = model.predict(imagePath, confidence = 50, overlap = 30) # screenshot().save("screenshot.jpg")
+	for i in range(len(predict.json()["predictions"])):
+		occupiedSpaces += 1
 
-if freeSpaces == 0:
-	print("estacionamento cheio")
-
-print(f"total de vagas: {parkingSpaces}")
-print(f"espaços ocupados: {parkingSpaces - freeSpaces}")
-print(f"espaços vazios: {freeSpaces}")
-object = { "vagas": freeSpaces }
-patch = requests.patch(f"{dbURL}.json", data = json.dumps(object))
+	emptySpaces = parkingSpaces - occupiedSpaces
+	requests.patch(f"{dbURL}.json", data = json.dumps({ "vagas": emptySpaces }))
+	print(f"total de vagas: {parkingSpaces} \nespaços ocupados: {occupiedSpaces} \nespaços vazios: {emptySpaces}")
+	predict.save("prediction.jpg")
+	parkingSpaces = 13
+	occupiedSpaces = 0
+	emptySpaces = parkingSpaces
+	time.sleep(1)
