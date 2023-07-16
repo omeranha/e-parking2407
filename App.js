@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
 import {NavigationContainer} from '@react-navigation/native';
-import { Button, Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Button, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { getDatabase, set, onValue, ref } from "firebase/database";
 import { initializeApp } from "firebase/app";
@@ -31,6 +30,17 @@ export default function App() {
 	);
 }
 
+const loginUser = () => {
+	onValue(ref(db, "users"), (snapshot) => {
+		users = snapshot.val()
+		for (const key in users) {
+			if (users[key].email == email && users[key].password == password) {
+				navigation.navigate("HomeScreen", {user: users[key]})
+			}
+		}
+	}, { onlyOnce: true })
+}
+
 const RegistrationScreen = ({navigation}) => {
 	let name = ""
 	let email = ""
@@ -44,7 +54,7 @@ const RegistrationScreen = ({navigation}) => {
 	}, { onlyOnce: true }
 	)
 
-	const onRegisterPress = () => {
+	const registerUser = () => {
 		lastUserId++
 		set(ref(db, 'users/' + lastUserId), {
 			name: name,
@@ -52,14 +62,7 @@ const RegistrationScreen = ({navigation}) => {
 			password: password
 		})
 
-		onValue(ref(db, "users"), (snapshot) => {
-			for (const key in snapshot.val()) {
-				if (snapshot.val()[key].email == email && snapshot.val()[key].password == password) {
-					navigation.navigate("HomeScreen", {user: snapshot.val()[key]})
-				}
-			}
-		}, { onlyOnce: true }
-		)
+		loginUser()
 	}
 
 	return (
@@ -93,7 +96,7 @@ const RegistrationScreen = ({navigation}) => {
 				/>
 				<TouchableOpacity
 					style={styles.button}
-					onPress={() => onRegisterPress()}>
+					onPress={() => registerUser()}>
 					<Text style={styles.buttonTitle}>Register</Text>
 				</TouchableOpacity>
 		</View>
@@ -101,20 +104,9 @@ const RegistrationScreen = ({navigation}) => {
 }
 
 const LoginScreen = ({navigation}) => {
-	const [name, setName] = useState("")
-	const [email, setEmail] = useState("")
-	const [password, setPassword] = useState("")
-
-	const onLoginPress = () => {
-		onValue(ref(db, "users"), (snapshot) => {
-			for (const key in snapshot.val()) {
-				if (snapshot.val()[key].email == email && snapshot.val()[key].password == password) {
-					navigation.navigate("HomeScreen", {user: snapshot.val()[key]})
-				}
-			}
-		}, { onlyOnce: true }
-		)
-	}
+	let name = ""
+	let email = ""
+	let password = ""
 
 	const toRegister = () => {
 		navigation.navigate("RegistrationScreen")
@@ -126,7 +118,7 @@ const LoginScreen = ({navigation}) => {
 					style={styles.input}
 					placeholder="name"
 					placeholderTextColor="#aaaaaa"
-					onChangeText={(text) => setName(text)}
+					onChangeText={(text) => name = text}
 					value={name}
 					underlineColorAndroid="transparent"
 					autoCapitalize="none"
@@ -135,7 +127,7 @@ const LoginScreen = ({navigation}) => {
 					style={styles.input}
 					placeholder="E-mail"
 					placeholderTextColor="#aaaaaa"
-					onChangeText={(text) => setEmail(text)}
+					onChangeText={(text) => email = text}
 					value={email}
 					underlineColorAndroid="transparent"
 					autoCapitalize="none"
@@ -144,14 +136,14 @@ const LoginScreen = ({navigation}) => {
 					style={styles.input}
 					placeholder="password"
 					placeholderTextColor="#aaaaaa"
-					onChangeText={(text) => setPassword(text)}
+					onChangeText={(text) => password = text}
 					value={password}
 					underlineColorAndroid="transparent"
 					autoCapitalize="none"
 				/>
 				<TouchableOpacity
 					style={styles.button}
-					onPress={() => onLoginPress()}>
+					onPress={() => loginUser()}>
 					<Text style={styles.buttonTitle}>Login</Text>
 				</TouchableOpacity>
 				<Text>Doesn't have a account? <Text onPress={toRegister} style = {{ color: '#4863e8' }}>Click here</Text></Text>
