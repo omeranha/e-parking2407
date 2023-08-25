@@ -1,0 +1,108 @@
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+html, body {
+    font-family: 'Kanit', sans-serif;
+}
+.container {
+
+    width: 100vw;
+    height: 100vh;
+    background: #DBF6FF;
+    background-size: 100vh;
+    flex: 1;
+    align-items: center;
+    overflow: hidden;
+    
+}
+
+.container form {
+
+    display: flex;
+    align-items: center; 
+    flex-direction: column;
+}
+
+.container form .inputContainer {
+    display: flex;
+    align-items: flex-start; 
+    flex-direction: column;
+}
+
+.container form .inputContainer :placeholder-shown {
+    color: #808080;
+    font-family: Kanit;
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 275;
+    line-height: normal;
+}
+
+
+.container #logo {
+
+    width: 350px;
+    height: 210px;
+    flex-shrink: 0;
+    margin-left: 30px;
+    margin-top: 150px;
+    
+} 
+.container .inputContainer #user {
+
+    margin: 4px;
+    border: 0;
+    box-shadow:0 0 15px 4px rgba(0, 0, 0, 0.06);
+    border-radius: 10px;
+    background-color: #E9FAFF;
+    width: 50vw;
+    margin-bottom: 15px;
+}
+.container .inputContainer #password{
+
+    margin: 4px;
+    border: 0;
+    box-shadow:0 0 15px 4px rgba(0, 0, 0, 0.06);
+    border-radius: 10px;
+    background-color: #E9FAFF;
+    width: 50vw;
+    margin-bottom: 20px;
+}
+
+.container .signup {
+
+appearance: none;
+padding: 10px;
+border: none;
+background-color: #5170FE;
+font-weight: 700;
+font-size: large;
+color: #fff;
+border-radius: 10px;
+width: 50vw;
+font-family: 'Kanit', sans-serif;
+margin: 20px;
+}
+.container #line {
+
+    width: 115px;
+    align-items: flex-start;
+    
+}
+.container #line2 {
+
+    width: 115px;
+}
+.container {
+
+    background-image: url("./assets/downwaves1.svg"), url("./assets/upwaves1.svg");
+    background-repeat: no-repeat, no-repeat;
+    background-size: 100vw, 100vw;
+    background-position: bottom, top;
+   
+}
