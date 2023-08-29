@@ -5,15 +5,16 @@ import { set, onValue, ref } from "firebase/database";
 import db from "./firebase";
 
 function Main() {
-	const [vagas, setVagas] = useState(0);
+	const [spaces, setSpaces] = useState(0);
 	const [time, setTime] = useState(new Date());
 	const [isReserved, setIsReserved] = useState(false);
 	const [remainingTime, setRemainingTime] = useState(30 * 60 * 1000);
+	const [parkinglot, setParkingLot] = useState("");
 
 	useEffect(() => {
 		const intervalId = setInterval(() => {
 			onValue(ref(db, "vagas"), (snapshot) => {
-				setVagas(snapshot.val())
+				setSpaces(snapshot.val())
 			}, { onlyOnce: true }
 			);
 		}, 500)
@@ -43,13 +44,17 @@ function Main() {
 	}, []);
 
 	const bookSpace = () => {
-		set(ref(db, "vagas"), vagas - 1);
-		setVagas(vagas - 1);
+		if (spaces <= 0 || parkinglot != "e-store") {
+			return
+		}
+	
+		set(ref(db, "vagas"), spaces - 1);
+		setSpaces(spaces - 1);
 		const currentTime = new Date();
 		setTime(currentTime);
 		setIsReserved(true);
 		set(ref(db, "lastBookTime"), currentTime.toLocaleTimeString());
-		set(ref(db, "remainingTime"), remainingTime); // Store the initial remainingTime in database
+		set(ref(db, "remainingTime"), remainingTime);
 	};
 
 	return (
@@ -60,7 +65,7 @@ function Main() {
 		<form>
 			<div className="options">
 				<label htmlFor=" " id="text"/> Escolha um estabelecimento <div>
-					<select name="Estabelecimentos" id="places">
+					<select name="Estabelecimentos" id="places" onChange={(e) => setParkingLot(e.target.value)}>
 						<option selected value="selecione">Selecione uma Opção</option>
 						<option value="e-store">e-store</option>
 						<option value="mercadinho">Mercadinho</option>
@@ -70,7 +75,7 @@ function Main() {
 			</div>
 			<div>
 				<label htmlFor="spots"/> Número de Vagas Disponíveis <div>
-					<output className="freespots"> {vagas} </output>
+					<output className="freespots"> {spaces} </output>
 				</div>
 			</div>
 			<div>

@@ -44,13 +44,13 @@ html, body {
 }
 
 
-.container #logo {
+.container #logoapp {
 
     width: 350px;
     height: 210px;
     flex-shrink: 0;
     margin-left: 30px;
-    margin-top: 150px;
+    margin-top: 50px;
     
 } 
 .container .inputContainer #user {
@@ -62,6 +62,7 @@ html, body {
     background-color: #E9FAFF;
     width: 50vw;
     margin-bottom: 15px;
+    margin-top: 40px;
 }
 .container .inputContainer #password{
 
@@ -71,7 +72,7 @@ html, body {
     border-radius: 10px;
     background-color: #E9FAFF;
     width: 50vw;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 .container .signup {
@@ -88,15 +89,14 @@ width: 50vw;
 font-family: 'Kanit', sans-serif;
 margin: 20px;
 }
-.container #line {
 
-    width: 115px;
-    align-items: flex-start;
-    
-}
-.container #line2 {
+.container #noaccline {
 
-    width: 115px;
+    text-align: flex start;
+    margin-right: 15px;
+    margin-bottom: 20px;
+
+
 }
 .container {
 
