@@ -1,61 +1,57 @@
-import logo from "./assets/logoapp.svg";
-import './Page3.css';
+import logo from "./assets/logoapp.svg"
+import './Page3.css'
 import { useState, useEffect } from 'react'
-import { set, onValue, ref } from "firebase/database";
-import db from "./firebase";
+import { set, onValue, ref } from "firebase/database"
+import db from "./firebase"
 
-function Main() {
-	const [spaces, setSpaces] = useState(0);
-	const [time, setTime] = useState(new Date());
-	const [isReserved, setIsReserved] = useState(false);
-	const [remainingTime, setRemainingTime] = useState(30 * 60 * 1000);
-	const [parkinglot, setParkingLot] = useState("");
+function MainPage(props) {
+	const { userid, userEmail, userPassword } = props
+	const [spaces, setSpaces] = useState(0)
+	const [parkinglot, setParkingLot] = useState("e-store")
+	const [userReserved, setUserReserved] = useState(false)
 
 	useEffect(() => {
 		const intervalId = setInterval(() => {
 			onValue(ref(db, "vagas"), (snapshot) => {
 				setSpaces(snapshot.val())
 			}, { onlyOnce: true }
-			);
+			)
+
+			onValue(ref(db, "users"), (snapshot) => {
+				const users = snapshot.val()
+				for (const key in users) {
+					if (users[key].email == userEmail && users[key].hasBookedSpace) {
+						setUserReserved(true)
+					}
+				}
+			})
 		}, 500)
 		return () => clearInterval(intervalId)
 	}, [])
-
-	useEffect(() => {
-		if (isReserved && remainingTime > 0) {
-		const intervalId = setInterval(() => {
-			setRemainingTime((prevRemainingTime) => prevRemainingTime - 1000); // Decrease by 1 second
-			set(ref(db, "remainingTime"), remainingTime - 1000); // Update remainingTime in database
-		}, 1000);
-		return () => clearInterval(intervalId);
-		}
-	}, [isReserved, remainingTime]);
-
-	useEffect(() => {
-		onValue(ref(db, "remainingTime"), (snapshot) => {
-			const storedRemainingTime = snapshot.val();
-			if (storedRemainingTime !== null) {
-				setRemainingTime(storedRemainingTime);
-				if (storedRemainingTime > 0) {
-					setIsReserved(true);
-				}
-			}
-		});
-	}, []);
 
 	const bookSpace = () => {
 		if (spaces <= 0 || parkinglot != "e-store") {
 			return
 		}
 	
-		set(ref(db, "vagas"), spaces - 1);
-		setSpaces(spaces - 1);
-		const currentTime = new Date();
-		setTime(currentTime);
-		setIsReserved(true);
-		set(ref(db, "lastBookTime"), currentTime.toLocaleTimeString());
-		set(ref(db, "remainingTime"), remainingTime);
-	};
+		set(ref(db, "vagas"), spaces - 1)
+		set(ref(db, "users/" + userid + "/hasBookedSpace"), true)
+		setUserReserved(true)
+	}
+
+	const openBarrier = (email) => {
+		onValue(ref(db, "users"), (snapshot) => {
+			const users = snapshot.val()
+			for (const key in users) {
+				if (users[key].email == email && users[key].hasBookedSpace) {
+					set(ref(db, "vagas"), spaces + 1)
+					set(ref(db, "openBarrier"), true)
+					set(ref(db, "users/" + userid + "/hasBookedSpace"), false)
+					setUserReserved(false)
+				}
+			}
+		}, { onlyOnce: false })
+	}
 
 	return (
 	<div className="container">
@@ -66,8 +62,8 @@ function Main() {
 			<div className="options">
 				<label htmlFor=" " id="text"/> Escolha um estabelecimento <div>
 					<select name="Estabelecimentos" id="places" onChange={(e) => setParkingLot(e.target.value)}>
-						<option selected value="selecione">Selecione uma Opção</option>
-						<option value="e-store">e-store</option>
+						<option value="selecione">Selecione uma Opção</option>
+						<option selected value="e-store">e-store</option>
 						<option value="mercadinho">Mercadinho</option>
 						<option value="farmácia">Farmácia</option>
 					</select>
@@ -79,21 +75,21 @@ function Main() {
 				</div>
 			</div>
 			<div>
-				<button className="reserve" type="button" onClick={() => bookSpace()}> Reservar uma Vaga </button>
-			</div>
-			<div id="nospots"> ---------- Nenhuma vaga disponível? ---------- </div>
-			<div>
-				<label htmlFor="time" id="titletime"/> Tempo estimado para disponibilidade de vagas <div id="time">
-					{isReserved && remainingTime > 0 ? (
-					<output> {new Date(remainingTime).toISOString().substr(14, 5)} </output>
-					) : ( 
-					<output></output>
-					)}
+				{spaces <= 0 ? (
+				<div>
+					{userReserved ? <button className="openbarrier" type="button" onClick={() => openBarrier(userEmail)}> Abrir cancela </button> : <p> </p>}
+					<div id="nospots"> ---------- Nenhuma vaga disponível? ---------- </div>
+					<label htmlFor="time" id="titletime"/> Tempo estimado para disponibilidade de vagas <div id="time"></div>
 				</div>
+				) : (
+				<div>
+					<button className="reserve" type="button" onClick={() => bookSpace()}> Reservar Vaga </button>
+				</div>
+				)}
 			</div>
 			</form>
 		</div>
 	)
 }
 
-export default Main
+export default MainPage
