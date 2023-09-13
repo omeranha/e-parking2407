@@ -1,0 +1,81 @@
+import { StyleSheet } from 'react-native';
+
+export default StyleSheet.create({
+	container: {
+		flex: 1,
+		alignItems: 'center',
+		overflow: 'hidden',
+		width: '100%',
+		height: '100%',
+		backgroundColor: '#DBF6FF',
+		backgroundSize: '100vh',
+	},
+	form: {
+		display: 'flex',
+		alignItems: 'center',
+		flexDirection: 'column',
+	},
+	inputContainer: {
+		display: 'flex',
+		alignItems: 'flex-start',
+		flexDirection: 'column',
+	},
+	input: {
+		margin: 4,
+		borderWidth: 0,
+		boxShadow: '0 0 15px 4px rgba(0, 0, 0, 0.06)',
+		borderRadius: 10,
+		backgroundColor: '#E9FAFF',
+		width: '50vw',
+		marginBottom: 15,
+		marginTop: 40,
+	},
+	placeholder: {
+		color: '#808080',
+		fontFamily: 'Kanit',
+		fontSize: 18,
+		fontStyle: 'italic',
+		fontWeight: '275',
+		lineHeight: 'normal',
+	},
+	logo: {
+		width: 350,
+		height: 210,
+		flexShrink: 0,
+		marginLeft: 30,
+		marginTop: 50,
+	},
+	signupButton: {
+		appearance: 'none',
+		padding: 10,
+		borderWidth: 0,
+		backgroundColor: '#5170FE',
+		fontWeight: '700',
+		fontSize: 'large',
+		color: '#fff',
+		borderRadius: 10,
+		width: '50vw',
+		fontFamily: 'Kanit',
+		margin: 20,
+	},
+	noAccountText: {
+		textAlign: 'flex-start',
+		marginRight: 15,
+		marginBottom: 20,
+	},
+	backgroundImage: {
+		backgroundImage: 'url("./assets/downwaves1.svg"), url("./assets/upwaves1.svg")',
+		backgroundRepeat: 'no-repeat, no-repeat',
+		backgroundSize: '100vw, 100vw',
+		backgroundPosition: 'bottom, top',
+	},
+	htmlBody: {
+		fontFamily: 'Kanit, sans-serif',
+	},
+	star: {
+		margin: 0,
+		padding: 0,
+		boxSizing: 'border-box',
+		textDecoration: 'none',
+	},
+});

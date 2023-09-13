@@ -2,8 +2,9 @@ import React from "react"
 import db from "./firebase"
 import { set, onValue, ref } from "firebase/database"
 import { useState, useEffect } from "react"
+import { View } from "react-native"
 import logo from "./assets/logoapp.svg"
-import "./registerPage.css"
+import "./registerPage"
 
 export default function RegisterPage() {
 	const [name, setName] = useState("")
@@ -68,6 +69,7 @@ export default function RegisterPage() {
 	}, [])
 
   return (
+	<View style={styles.container}>
 <div className="container">
 		<div>
 			<img src= {logo} alt="" id="logo" />
@@ -92,5 +94,6 @@ export default function RegisterPage() {
 				<button className="ready" type="button" onClick={() => registerUser(lastuserid, name, email, password, confirmpassword)}> Pronto! </button>
 			</form>
 		</div>
+		</View>
 	);
 }

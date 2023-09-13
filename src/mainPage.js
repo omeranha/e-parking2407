@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
 import { set, onValue, ref } from "firebase/database"
 import db from "./firebase"
+import styles from './mainStyle';
+import { View } from "react-native"
 
 export default function MainPage({navigation, route}) {
 	const userid = route.params.userid
@@ -55,6 +57,7 @@ export default function MainPage({navigation, route}) {
 	}
 
 	return (
+		<View style={styles.container}>
 	<div className="container">
 		<div>
 			<img src= {logo} alt="" id="logo" />
@@ -90,5 +93,6 @@ export default function MainPage({navigation, route}) {
 			</div>
 			</form>
 		</div>
+		</View>
 	)
 }

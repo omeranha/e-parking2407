@@ -1,9 +1,10 @@
 import React from "react"
 import { onValue, ref } from "firebase/database"
 import { useState, useEffect } from "react"
+import { View } from "react-native"
 import logo from "./assets/logoapp.svg"
 import db from "./firebase"
-import "./loginPage.css"
+import styles from "./loginSyle"
 
 export default function LoginPage() {
 	const [email, setEmail] = useState("")
@@ -26,6 +27,7 @@ export default function LoginPage() {
 	}
 
 	return (
+		<View style={styles.container}>
 	<div className="container"> 
 	<div>
 		<img src= {logo} alt="" id="logoapp" />
@@ -45,5 +47,6 @@ export default function LoginPage() {
 			<button className="signup" type="button" onClick={(e) => toRegisterPage(e)}> Cadastre-se! </button>
 		</form>
 		</div>
+		</View>
 	)
 }
