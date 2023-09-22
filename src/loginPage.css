@@ -1,0 +1,111 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+  }
+  
+  html, body {
+      font-family: 'Kanit', sans-serif;
+  }
+  .container {
+  
+      width: 100vw;
+      height: 100vh;
+      background: #DBF6FF;
+      background-size: 100vh;
+      flex: 1;
+      align-items: center;
+      overflow: hidden;
+      
+  }
+  
+  .container form {
+  
+      display: flex;
+      align-items: center; 
+      flex-direction: column;
+  }
+  
+  .container form .inputContainer {
+      display: flex;
+      align-items: flex-start; 
+      flex-direction: column;
+  }
+  
+  .container form .inputContainer :placeholder-shown {
+      color: #808080;
+      font-family: Kanit;
+      font-size: 18px;
+      font-style: italic;
+      font-weight: 275;
+      line-height: normal;
+  }
+  
+  
+  .container #logoapp {
+  
+      width: 30vw;
+      height: 30vh;
+      flex-shrink: 0;
+      margin-left: 37vw;
+      margin-top: 17vh;
+      
+  } 
+  .container .inputContainer #user {
+  
+      margin: 4px;
+      border: 0;
+      box-shadow:0 0 15px 4px rgba(0, 0, 0, 0.06);
+      border-radius: 10px;
+      background-color: #E9FAFF;
+      width: 40vw;
+      margin-bottom: 15px;
+      margin-top: 10px;
+      font-family: 'Kanit';
+      text-decoration-color: black;
+  }
+  .container .inputContainer #password{
+  
+      margin: 4px;
+      border: 0;
+      box-shadow:0 0 15px 4px rgba(0, 0, 0, 0.06);
+      border-radius: 10px;
+      background-color: #E9FAFF;
+      width: 40vw;
+      margin-bottom: 40px;
+      font-family: 'Kanit';
+      text-decoration-color: black;
+  }
+  
+  .container .signup {
+  
+  appearance: none;
+  padding: 10px;
+  border: none;
+  background-color: #5170FE;
+  font-weight: 700;
+  font-size: large;
+  color: #fff;
+  border-radius: 10px;
+  width: 40vw;
+  font-family: 'Kanit', sans-serif;
+  margin: 10px;
+  }
+  
+  .container #noaccline {
+  
+      text-align: flex start;
+      margin-right: 15px;
+      margin-bottom: 20px;
+      color: #000000;
+  
+  
+  }
+  .container {
+  
+      background-image: url("./assets/ondacima.svg"), url("./assets/ondabaixo.svg");
+      background-position: top, bottom;
+      background-attachment: fixed, fixed;
+  }
