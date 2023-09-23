@@ -3,7 +3,7 @@ from goprocam import GoProCamera
 from roboflow import Roboflow
 
 goproCamera = GoProCamera.GoPro()
-model = Roboflow(api_key = "lQmUqij8BtbnlJ8kP0WG").workspace("just-hobbies").project("hotwheel-2").version(3).model
+model = Roboflow(api_key = "lQmUqij8BtbnlJ8kP0WG").workspace("membrillos-etal").project("smart-vehicle-counting-and-parking-system1").version(61).model
 imagePath = "parkinglot.jpg"
 
 while True:

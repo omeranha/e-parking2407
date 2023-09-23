@@ -1,0 +1,12 @@
+names:
+- Car
+nc: 1
+roboflow:
+  license: CC BY 4.0
+  project: smart-vehicle-counting-and-parking-system1
+  url: https://universe.roboflow.com/membrillos-etal/smart-vehicle-counting-and-parking-system1/dataset/61
+  version: 61
+  workspace: membrillos-etal
+test: ../test/images
+train: Smart-Vehicle-Counting-and-Parking-System1-61/train/images
+val: Smart-Vehicle-Counting-and-Parking-System1-61/valid/images
