@@ -20,8 +20,8 @@ function MainPage(props) {
 			onValue(ref(db, "users"), (snapshot) => {
 				const users = snapshot.val()
 				for (const key in users) {
-					if (users[key].name == name && users[key].hasBookedSpace) {
-						setUserReserved(true)
+					if (users[key].name == name) {
+						setUserReserved(users[key].hasBookedSpace)
 					}
 				}
 			})
@@ -30,7 +30,7 @@ function MainPage(props) {
 	}, [])
 
 	const bookSpace = () => {
-		if (spaces <= 0 || parkinglot != "e-store" && userReserved) {
+		if (spaces <= 0 || parkinglot != "facinho" && userReserved) {
 			return
 		}
 	
@@ -45,7 +45,7 @@ function MainPage(props) {
 			for (const key in users) {
 				if (users[key].name == name && users[key].hasBookedSpace) {
 					set(ref(db, "vagas"), spaces + 1)
-					set(ref(db, "openBarrier"), true)
+					set(ref(db, "openBarrier"), "true")
 					set(ref(db, "users/" + userid + "/hasBookedSpace"), false)
 					setUserReserved(false)
 				}
@@ -63,7 +63,7 @@ function MainPage(props) {
 				<label htmlFor=" " id="text"/> Escolha um estabelecimento <div>
 					<select name="Estabelecimentos" defaultValue={"selecione"} id="places" onChange={(e) => setParkingLot(e.target.value)}>
 						<option value="selecione" disabled>Selecione uma Opção</option>
-						<option value="e-store">e-store</option>
+						<option value="facinho">Facinho store</option>
 						<option value="mercadinho">Mercadinho</option>
 						<option value="farmácia">Farmácia</option>
 					</select>
@@ -75,23 +75,23 @@ function MainPage(props) {
 				</div>
 			</div>
 			<div>
-				{!userReserved ? (
-					spaces <= 0 ? (
-					<div>
-						<button className="openbarrier" type="button" onClick={() => openBarrier(name)}> Abrir cancela </button>
-						<div id="nospots"> ---------- Nenhuma vaga disponível? ---------- </div>
-						<label htmlFor="time" id="titletime"/> Tempo estimado para disponibilidade de vagas <div id="time"></div>
+				{spaces <= 0 ? (
+				<div>
+					<button className="openbarrier" type="button" onClick={() => openBarrier(name)}> Abrir cancela </button>
+					<div id="nospots"> ---------- Nenhuma vaga disponível? ---------- </div>
+					<label htmlFor="time" id="titletime"/> Tempo estimado para disponibilidade de vagas <div id="time"></div>
 					</div>
-					) : (
+				) : (
+					!userReserved ? (
 					<div>
 						<button className="reserve" type="button" onClick={() => bookSpace()}> Reservar Vaga </button>
-					</div>
-					)
+						</div>
 					) : (
 					<div>
 						<p>A vaga já foi reservada</p>
 					</div>
-					)}
+					)
+				)}
 			</div>
 			</form>
 		</div>
