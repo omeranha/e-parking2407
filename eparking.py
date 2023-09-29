@@ -4,7 +4,9 @@ from roboflow import Roboflow
 
 model = Roboflow(api_key = "lQmUqij8BtbnlJ8kP0WG").workspace("membrillos-etal").project("smart-vehicle-counting-and-parking-system1").version(61).model
 print("Roboflow API loaded")
-webcam = cv2.VideoCapture(1, cv2.CAP_DSHOW)
+webcam = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+webcam.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+webcam.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 imagePath = "parkinglot.jpg"
 
 while True:
@@ -13,7 +15,7 @@ while True:
 
 	ret, frame = webcam.read()
 	cv2.imwrite(imagePath, frame)
-	predict = model.predict(imagePath, confidence = 60, overlap = 30)
+	predict = model.predict(imagePath, confidence = 50, overlap = 30)
 	for i in range(len(predict.json()["predictions"])):
 		occupiedSpaces += 1
 
