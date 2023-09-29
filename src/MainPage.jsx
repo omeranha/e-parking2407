@@ -45,7 +45,7 @@ function MainPage(props) {
 			for (const key in users) {
 				if (users[key].name == name && users[key].hasBookedSpace) {
 					set(ref(db, "vagas"), spaces + 1)
-					set(ref(db, "openBarrier"), "true")
+					set(ref(db, "openBarrier"), true)
 					set(ref(db, "users/" + userid + "/hasBookedSpace"), false)
 					setUserReserved(false)
 				}
