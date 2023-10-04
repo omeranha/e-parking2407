@@ -51,7 +51,8 @@ function RegisterPage() {
 			name: name,
 			email: email,
 			password: password,
-			hasBookedSpace: false
+			hasBookedSpace: false,
+			timeReserved: 0
 		})
 		loginUser(email, password)
 	}

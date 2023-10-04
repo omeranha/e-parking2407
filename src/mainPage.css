@@ -39,10 +39,10 @@
 }
 .container #logo {
 
-    width: 30vw;
-    height: 30wh;
-    margin-top: 9vh;
-    margin-left: 37vw;
+    width: 20vw;
+    height: 20wh;
+    margin-top: 10vh;
+    margin-left: 41vw;
 }
 .container .reserve {
 
@@ -104,7 +104,7 @@
     margin-top: 10px;
 
 }
-.container #openbarrier {
+.container .openbarrier {
 
     appearance: none;
     padding: 10px;
@@ -114,8 +114,8 @@
     font-size: large;
     color: #fff;
     border-radius: 10px;
-    width: 40vw;
+    width: 30vw;
     height: 7vh;
     font-family: 'Kanit', sans-serif;
-    margin: 20px;
+    margin: 10px;
 }
